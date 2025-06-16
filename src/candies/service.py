@@ -33,7 +33,7 @@ class CandiesServise:
 
     @classmethod
     def update(cls, candy_id: int, candy: CandySchema):
-        candy_dict = candy.to_dict_wo_id
+        candy_dict = candy.to_dict_wo_id()
         CandiesRepository.update(candy_id, candy_dict)
 
     @classmethod
