@@ -1,16 +1,15 @@
 
 from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class CandySchema(BaseModel):
-    id: Optional[int] = Field(default=1)
+    id: Optional[int] = Field(default=None, description="ID of the candy, auto-incremented by DB")
     title: str = Field(default="конфета")
     state: str = Field(default="full")
     owner: str = Field(default="teacher")
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
     def __eq__(self, other):
         if not isinstance(other, type(self)):
