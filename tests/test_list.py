@@ -1,6 +1,16 @@
 import pytest
 from src.candies.schemas import CandySchema
 from src.candies.service import CandiesServise
+from src.db import Base, engine
+from src.config import settings
+
+@pytest.fixture(scope="session", autouse=True)
+def setup_database():
+    print(f"{settings.DB_NAME=}")
+    assert settings.MODE == "TEST"
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
+    
 
 @pytest.fixture
 def candies():
