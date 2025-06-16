@@ -4,29 +4,10 @@ from src.candies.service import CandiesServise
 from src.db import Base, engine
 from src.config import settings
 
-@pytest.fixture(scope="session", autouse=True)
-def setup_database():
-    print(f"{settings.DB_NAME=}")
-    assert settings.MODE == "TEST"
-    Base.metadata.drop_all(engine)
-    Base.metadata.create_all(engine)
+
     
-
-@pytest.fixture
-def candies():
-    candies = [
-        CandySchema(title="candy1", owner="Даниил"),
-        CandySchema(title="candy2", state="eaten"),         
-        CandySchema(title="candy3", state="half"),         
-    ]
-    return candies
-
-@pytest.fixture
-def empty_candies():
-    CandiesServise.delete_all()
-
+@pytest.mark.usefixture("empty_candies")
 class TestCandies:
-    @pytest.mark.usefixtures("empty_candies")
     def test_count_candies(self, candies):
 
         for candy in candies:
@@ -34,8 +15,7 @@ class TestCandies:
 
         assert CandiesServise.count() == 3
 
-    def test_list_candies(self, candies):
-        
+    def test_list_candies(self, candies):        
         added_ids = []
 
         for candy in candies:
