@@ -1,10 +1,14 @@
 venv/
 .venv/
 env/
-
+*.env
+!.env.example
 
 __pycache__/
 *.pyc
+.py[cod]
+*.so
+.Python
 
 *.pyd
 *.exe
@@ -15,5 +19,13 @@ __pycache__/
 *.dist-info/
 
 .DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+*.swp
 
 *.log
+
+.test.env
+requirements.txt.bak
